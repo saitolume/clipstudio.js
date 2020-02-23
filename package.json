@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "buffer": "^5.4.3",
-    "cross-blob": "^1.2.1",
     "sql.js": "^1.1.0"
   },
   "husky": {

@@ -765,11 +765,6 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-blob-polyfill@^4.0.20190430:
-  version "4.0.20190430"
-  resolved "https://registry.yarnpkg.com/blob-polyfill/-/blob-polyfill-4.0.20190430.tgz#b7e1f2e8e8f9733a89416f35d436de4e2f5c9661"
-  integrity sha512-REie9DM5XvHcqa9tuVT1QverzNpPbuRGffFGfwtHhZLHoToiAFP2YxHqVTQvET+UYnjRttGnlWag0+i3YgPKtw==
-
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
@@ -1062,14 +1057,6 @@ cosmiconfig@^6.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.7.2"
-
-cross-blob@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/cross-blob/-/cross-blob-1.2.1.tgz#b565f953c46085154ebd2c1074620d39c8181cc6"
-  integrity sha512-UjtHJ46lLBG9YVCnzg1l53Wo7zezeFUMntpYeFWGLaomBMTpbTREwJmjhI3EnqsScJ6ick5brojofK3dK8QoNQ==
-  dependencies:
-    blob-polyfill "^4.0.20190430"
-    fetch-blob "^1.0.5"
 
 cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
@@ -1559,11 +1546,6 @@ fb-watchman@^2.0.0:
   integrity sha512-DkPJKQeY6kKwmuMretBhr7G6Vodr7bFwDYTXIkfG1gjvNpaxBTQV3PbXg6bR1c1UP4jPOX0jHUbbHANL9vRjVg==
   dependencies:
     bser "2.1.1"
-
-fetch-blob@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/fetch-blob/-/fetch-blob-1.0.5.tgz#5cc86a8740236c38d8073b153c8b51be5f3dc11e"
-  integrity sha512-BIggzO037jmCrZmtgntzCD2ymEaWgw9OMJsfX7FOS1jXGqKW9FEhETJN8QK4KxzIJknRl3RQdyzz34of+NNTMQ==
 
 figures@^1.7.0:
   version "1.7.0"

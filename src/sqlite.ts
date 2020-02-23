@@ -1,11 +1,9 @@
-import Blob from 'cross-blob'
 import { resolve } from 'path'
 import initSqlJs from 'sql.js'
 import { SqlJs } from 'sql.js/module'
 import { blobToUint8Array, isBrowser } from './utils'
 
 // import { promises as fs } from 'fs'
-// import { resolve } from 'path'
 
 export const locateFile = (filename: string) => {
   if (isBrowser) return `https://cdn.jsdelivr.net/npm/sql.js@1.1.0/dist/${filename}`
@@ -21,7 +19,7 @@ export class Sqlite {
 
   static load = async (file: Blob | Buffer) => {
     const SQL = await initSqlJs({ locateFile })
-    const data = file instanceof Blob ? await blobToUint8Array(file) : file
+    const data = isBrowser ? await blobToUint8Array(file as Blob) : (file as Buffer)
     const db = new SQL.Database(data)
     return new Sqlite(db)
   }

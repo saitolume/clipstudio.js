@@ -1,4 +1,3 @@
-import CrossBlob from 'cross-blob'
 import { Sqlite } from './sqlite'
 import { Layer } from './types'
 import { parseClipToSqlite, isBrowser } from './utils'
@@ -11,7 +10,7 @@ export class ClipStudio {
 
   static load = async (file: File | Buffer) => {
     const sqlite = await parseClipToSqlite(file)
-    const db = await Sqlite.load(sqlite as CrossBlob)
+    const db = await Sqlite.load(sqlite)
     return new ClipStudio(db)
   }
 
