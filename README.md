@@ -13,6 +13,8 @@ $ yarn add clipstudio # or npm install clipstudio
 Browsers
 
 ```ts
+import { ClipStudio } from 'clipstudio'
+
 const inputFile = event => {
   const [file] = event.target.files
   const clip = await ClipStudio.load(file)
@@ -25,7 +27,7 @@ const inputFile = event => {
 Node.js
 
 ```ts
-import ClipStudio from 'clipstudio'
+import { ClipStudio } from 'clipstudio'
 import { promises as fs } from 'fs'
 
 const file = await fs.readFile('path/to/clip-file')
@@ -72,7 +74,7 @@ Returns layers array.
     opacity: number
     isVisible: boolean
     isFolder: boolean
-  }
+}
 ```
 
 ## License
