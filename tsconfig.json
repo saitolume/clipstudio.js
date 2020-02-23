@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "module": "commonjs",
+    "outDir": "dist",
+    "strict": true,
+    "target": "ES2015"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["test"]
+}
