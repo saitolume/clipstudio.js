@@ -569,9 +569,9 @@
   integrity sha512-5qOlnZscTn4xxM5MeGXAMOsIOIKIbh9e85zJWfBRVPlRMEVawzoPhINYbRGkBZCI8LxvBe7tJCdWiarA99OZfQ==
 
 "@types/sql.js@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@types/sql.js/-/sql.js-1.0.2.tgz#3fc9cdf25a012cdfa8c35b35300e9c40a036127f"
-  integrity sha512-Dne6JoWSLELmQ/Cd/YVHTe/OyiU1yWVsKl+benqcbvsxUmnqoWA9OurfLlMuDe/rcv3vAOMLcA1Mdq9Pq8Lnpw==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@types/sql.js/-/sql.js-1.0.3.tgz#44a6734585da7d0d15c96cc5fe9ea545ed845df9"
+  integrity sha512-LVKYbcXRD+CneFqKVUHtSdVARo3DFn3JusZTV1CNkrg5i/rR1uGDcv0v6PrVgGtxTRdxI0FgL38QxgCQoVi/Aw==
   dependencies:
     "@types/emscripten" "*"
     "@types/node" "*"
