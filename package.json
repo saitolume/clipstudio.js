@@ -26,7 +26,8 @@
     "lint": "biome lint src/",
     "check": "biome check src/",
     "prepublishOnly": "pnpm run build",
-    "test": "tsx --test test/**/*.test.ts"
+    "test": "tsx --test test/**/*.test.ts",
+    "release": "npm version patch && git push origin --tags"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
