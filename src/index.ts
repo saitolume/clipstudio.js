@@ -1,2 +1,2 @@
-export { ClipStudio } from './clipstudio'
-export * from './types'
+export { ClipStudio } from './clipstudio.js'
+export * from './types.js'

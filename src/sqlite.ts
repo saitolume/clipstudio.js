@@ -1,6 +1,6 @@
 import { resolve } from 'node:path'
 import initSqlJs from 'sql.js'
-import { blobToUint8Array, isBrowser } from './utils'
+import { blobToUint8Array, isBrowser } from './utils.js'
 
 // import { promises as fs } from 'fs'
 

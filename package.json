@@ -2,8 +2,15 @@
   "name": "clipstudio",
   "description": "A JavaScript library for using CLIP STUDIO .clip file on browsers and Node.js",
   "version": "0.1.1",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/saitoeku3/clipstudio.js"

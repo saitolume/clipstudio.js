@@ -1,6 +1,6 @@
-import { Sqlite } from './sqlite'
-import { Layer } from './types'
-import { isBrowser, parseClipToSqlite } from './utils'
+import { Sqlite } from './sqlite.js'
+import { Layer } from './types.js'
+import { isBrowser, parseClipToSqlite } from './utils.js'
 
 // import { promises as fs } from 'fs'
 // import { resolve } from 'path'
