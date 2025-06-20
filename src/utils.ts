@@ -15,7 +15,7 @@ export const parseClipToSqlite = async (file: File | Buffer) => {
       const data = fileBuf.slice(index)
       resolve(new Blob([data]))
     }
-    reader.readAsArrayBuffer(file)
+    reader.readAsArrayBuffer(file as File)
   })
 }
 

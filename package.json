@@ -22,13 +22,13 @@
     "test": "tsx --test test/**/*.test.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.0",
-    "@types/sql.js": "^1.0.2",
+    "@biomejs/biome": "^2.0.1",
+    "@types/sql.js": "^1.4.9",
     "tsx": "^4.20.3",
-    "typescript": "^3.8.2"
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "buffer": "^5.4.3",
-    "sql.js": "^1.1.0"
+    "buffer": "^6.0.3",
+    "sql.js": "^1.13.0"
   }
 }
