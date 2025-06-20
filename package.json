@@ -35,7 +35,6 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "buffer": "^6.0.3",
     "sql.js": "^1.13.0"
   }
 }
