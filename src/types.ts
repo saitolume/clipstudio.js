@@ -1,8 +1,17 @@
+/**
+ * Represents a layer in a CLIP STUDIO file
+ */
 export type Layer = {
-  id: string // LayerUuid
-  index: number // _PW_ID
-  name: string // LayerName
-  opacity: number // LayerOpacity (0 - 256) / 256
-  isVisible: boolean // LayerVisibility 0: false, 1: true, 3: ???
-  isFolder: boolean // LayerFolder 0: false, 17: true, 1: ???
+  /** Layer unique identifier (LayerUuid) */
+  id: string
+  /** Layer index in the hierarchy (_PW_ID) */
+  index: number
+  /** Layer display name (LayerName) */
+  name: string
+  /** Layer opacity as a decimal from 0 to 1 (LayerOpacity normalized from 0-256) */
+  opacity: number
+  /** Whether the layer is visible (LayerVisibility: 0=false, 1=true) */
+  isVisible: boolean
+  /** Whether this is a folder layer (LayerFolder: 0=false, 17=true) */
+  isFolder: boolean
 }
