@@ -34,10 +34,10 @@ export class ClipStudio {
     if (!results.length || !results[0].values.length) {
       throw new Error('No thumbnail found in CLIP file')
     }
-    
+
     const [[thumbnail]] = results[0].values
     const imageData = thumbnail as Uint8Array
-    
+
     return isBrowser ? new Blob([imageData]) : Buffer.from(imageData)
   }
 
@@ -50,7 +50,7 @@ export class ClipStudio {
     if (!results.length) {
       return []
     }
-    
+
     const { values } = results[0]
     return values.map<Layer>(([id, index, name, opacity, visibility, folder]) => ({
       id: id as string,

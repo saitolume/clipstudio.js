@@ -11,7 +11,7 @@ const SQLITE_HEADER = 'SQLite format 3'
  */
 export const parseClipToSqlite = async (file: File | Buffer): Promise<Blob | Buffer> => {
   const sqliteHeaderBuffer = Buffer.from(new TextEncoder().encode(SQLITE_HEADER))
-  
+
   if (file instanceof Buffer) {
     const index = file.indexOf(sqliteHeaderBuffer)
     if (index === -1) {
@@ -49,7 +49,7 @@ export const blobToUint8Array = async (blob: Blob): Promise<Uint8Array> => {
   if (!isBrowser) {
     throw new Error('blobToUint8Array can only be used in browser environments')
   }
-  
+
   return new Promise<Uint8Array>((resolve, reject) => {
     const reader = new FileReader()
     reader.onload = () => resolve(new Uint8Array(reader.result as ArrayBuffer))
