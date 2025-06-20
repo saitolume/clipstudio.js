@@ -1,6 +1,5 @@
 import { resolve } from 'path'
 import initSqlJs from 'sql.js'
-import { SqlJs } from 'sql.js/module'
 import { blobToUint8Array, isBrowser } from './utils'
 
 // import { promises as fs } from 'fs'
@@ -11,9 +10,9 @@ export const locateFile = (filename: string) => {
 }
 
 export class Sqlite {
-  db: SqlJs.Database
+  db: initSqlJs.Database
 
-  constructor(db: SqlJs.Database) {
+  constructor(db: initSqlJs.Database) {
     this.db = db
   }
 

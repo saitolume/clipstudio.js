@@ -17,7 +17,7 @@
     "build": "tsc -b tsconfig.json",
     "format": "eslint \"src/**/*.ts\" --fix",
     "lint": "eslint \"src/**/*.ts\"",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pnpm run build",
     "test": "jest --config jest.config.json"
   },
   "devDependencies": {
@@ -46,7 +46,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "npm run format",
+      "pnpm run format",
       "git add"
     ]
   }
