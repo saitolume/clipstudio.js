@@ -1,7 +1,7 @@
 {
   "name": "clipstudio",
   "description": "A JavaScript library for using CLIP STUDIO .clip file on browsers and Node.js",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
