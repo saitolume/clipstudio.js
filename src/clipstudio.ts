@@ -1,6 +1,6 @@
 import { Sqlite } from './sqlite'
 import { Layer } from './types'
-import { parseClipToSqlite, isBrowser } from './utils'
+import { isBrowser, parseClipToSqlite } from './utils'
 
 // import { promises as fs } from 'fs'
 // import { resolve } from 'path'
@@ -17,15 +17,15 @@ export class ClipStudio {
   getThumbnail() {
     const [
       {
-        values: [[thumbnail]]
-      }
+        values: [[thumbnail]],
+      },
     ] = this.db.exec('SELECT ImageData FROM CanvasPreview')
     return isBrowser ? new Blob([thumbnail as Uint8Array]) : Buffer.from(thumbnail as Uint8Array)
   }
 
   getLayers() {
     const [{ values }] = this.db.exec(
-      'SELECT LayerUuid, _PW_ID, LayerName, LayerOpacity, LayerVisibility, LayerFolder FROM Layer'
+      'SELECT LayerUuid, _PW_ID, LayerName, LayerOpacity, LayerVisibility, LayerFolder FROM Layer',
     )
     const layers = values.map<Layer>(
       ([id, index, name, opacity, visibility, folder]) =>
@@ -35,8 +35,8 @@ export class ClipStudio {
           name,
           opacity: (opacity as number) / 256,
           isVisible: visibility === 1,
-          isFolder: folder === 17
-        } as Layer)
+          isFolder: folder === 17,
+        }) as Layer,
     )
     return layers
   }

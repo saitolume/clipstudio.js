@@ -8,7 +8,7 @@ export const parseClipToSqlite = async (file: File | Buffer) => {
   }
 
   const reader = new FileReader()
-  return new Promise<Blob | Buffer>(resolve => {
+  return new Promise<Blob | Buffer>((resolve) => {
     reader.onload = () => {
       const fileBuf = Buffer.from(reader.result as ArrayBuffer)
       const index = fileBuf.indexOf(Buffer.from(new TextEncoder().encode('SQLite format 3')))
@@ -22,7 +22,7 @@ export const parseClipToSqlite = async (file: File | Buffer) => {
 export const blobToUint8Array = async (blob: Blob) => {
   if (!isBrowser) return
   const reader = new FileReader()
-  return new Promise<Uint8Array>(resolve => {
+  return new Promise<Uint8Array>((resolve) => {
     reader.onload = () => resolve(new Uint8Array(reader.result as ArrayBuffer))
     reader.readAsArrayBuffer(blob)
   })

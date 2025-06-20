@@ -1,4 +1,4 @@
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import initSqlJs from 'sql.js'
 import { blobToUint8Array, isBrowser } from './utils'
 
