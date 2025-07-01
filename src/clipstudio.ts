@@ -5,7 +5,8 @@ import { isBrowser, parseClipToSqlite } from './utils.js'
 /** SQL queries for database operations */
 const SQL_QUERIES = {
   THUMBNAIL: 'SELECT ImageData FROM CanvasPreview',
-  LAYERS: 'SELECT LayerUuid, _PW_ID, LayerName, LayerOpacity, LayerVisibility, LayerFolder FROM Layer',
+  LAYERS:
+    'SELECT LayerUuid, _PW_ID, LayerName, LayerOpacity, LayerVisibility, LayerFolder FROM Layer',
 } as const
 
 /**

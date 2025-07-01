@@ -191,7 +191,7 @@ Note: Requires support for ES2020 features and WebAssembly.
 
 ## Node.js Compatibility
 
-- Node.js 16.0.0+
+- Node.js 20.19.3+
 
 ## Development
 

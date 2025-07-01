@@ -37,5 +37,8 @@
   },
   "dependencies": {
     "sql.js": "^1.13.0"
+  },
+  "engines": {
+    "node": ">=20.19.3"
   }
 }
