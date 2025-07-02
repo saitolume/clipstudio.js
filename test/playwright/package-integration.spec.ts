@@ -23,7 +23,7 @@ test.describe('CLIP STUDIO.js Package Integration', () => {
     const clipFilePath = process.cwd() + '/test/sample.clip'
     await page.locator('#fileInput').setInputFiles(clipFilePath)
     
-    // 処理完了まで待機（ローディング状態スキップ）
+    // 処理完了まで待機
     await expect(page.locator('#result')).toBeVisible({ timeout: 30000 })
     
     // エラーが発生していないことを確認
