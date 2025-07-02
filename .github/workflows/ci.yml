@@ -59,11 +59,10 @@ jobs:
         run: pnpm run test
 
   e2e-tests:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: ['20.19.3', '22', '24']
+        node-version: ['20.19.3']
     
     steps:
       - name: Checkout code

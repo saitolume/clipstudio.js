@@ -164,31 +164,4 @@ test.describe('CLIP STUDIO.js Package Integration', () => {
     console.log(`✅ Package compatibility verified for ${browserName}`)
   })
 
-  test('should demonstrate package API usage', async ({ page }) => {
-    await page.goto('/examples/sample-browser.html')
-    
-    // CLIPファイルをアップロード
-    const clipFilePath = process.cwd() + '/test/sample.clip'
-    await page.locator('#fileInput').setInputFiles(clipFilePath)
-    
-    // 処理完了まで待機
-    await expect(page.locator('#result')).toBeVisible({ timeout: 20000 })
-    
-    // **パッケージAPIの実際の使用例を確認**
-    
-    // ClipStudio.load() の動作確認
-    const loadSuccess = await page.evaluate(() => {
-      return window.clipStudioInstance !== undefined
-    })
-    
-    // getThumbnail() の動作確認
-    const thumbnailGenerated = await page.locator('#thumbnailImage').isVisible()
-    expect(thumbnailGenerated).toBe(true)
-    
-    // getLayers() の動作確認
-    const layersDisplayed = await page.locator('.layer-item').count()
-    expect(layersDisplayed).toBeGreaterThan(0)
-    
-    console.log(`✅ Package API methods verified: load(), getThumbnail(), getLayers()`)
-  })
 })

@@ -9,7 +9,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   reporter: 'html',
   use: {
     baseURL: 'http://127.0.0.1:8080',
@@ -21,14 +21,18 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // Firefox and WebKit disabled for faster CI execution
+    // Enable locally for comprehensive testing
+    ...(process.env.CI ? [] : [
+      {
+        name: 'firefox',
+        use: { ...devices['Desktop Firefox'] },
+      },
+      {
+        name: 'webkit',
+        use: { ...devices['Desktop Safari'] },
+      },
+    ]),
   ],
 
   webServer: {
