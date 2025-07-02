@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLIP STUDIO.js ブラウザサンプル</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            background: #f8f9ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #764ba2;
+            background: #f0f2ff;
+        }
+        
+        .upload-area.dragover {
+            border-color: #764ba2;
+            background: #e8ebff;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .upload-text {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .upload-hint {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .result {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .thumbnail {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .thumbnail img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .layers {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .layer-item {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .layer-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .layer-info {
+            font-size: 0.9em;
+            color: #666;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .info-tag {
+            background: #667eea;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        
+        .error {
+            display: none;
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #c62828;
+            margin: 20px 0;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #667eea;
+            font-size: 1.1em;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 CLIP STUDIO.js</h1>
+        <p style="text-align: center; color: #666; font-size: 1.1em;">
+            ブラウザでCLIP STUDIOファイルを解析するサンプルアプリ
+        </p>
+        
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-text">📁 CLIPファイルを選択またはドロップ</div>
+            <div class="upload-hint">クリックしてファイルを選択するか、ファイルをここにドラッグ&ドロップしてください</div>
+            <input type="file" id="fileInput" accept=".clip" />
+        </div>
+        
+        <div class="loading" id="loading">
+            🔄 ファイルを解析中...
+        </div>
+        
+        <div class="error" id="error"></div>
+        
+        <div class="result" id="result">
+            <div class="thumbnail" id="thumbnail">
+                <h2>🖼️ サムネイル</h2>
+                <img id="thumbnailImage" src="" alt="サムネイル" width="300" height="200" />
+            </div>
+            
+            <div class="layers">
+                <h2>📑 レイヤー情報</h2>
+                <div id="layersList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- sql.jsを事前に読み込む -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-wasm.js" defer></script>
+    
+    <script type="module">
+        import { ClipStudio } from '../dist/index.js'
+        
+        const uploadArea = document.getElementById('uploadArea')
+        const fileInput = document.getElementById('fileInput')
+        const loading = document.getElementById('loading')
+        const error = document.getElementById('error')
+        const result = document.getElementById('result')
+        const thumbnailImage = document.getElementById('thumbnailImage')
+        const layersList = document.getElementById('layersList')
+        
+        // ファイル選択エリアのクリックハンドラ
+        uploadArea.addEventListener('click', () => {
+            fileInput.click()
+        })
+        
+        // ファイル選択ハンドラ
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                processFile(e.target.files[0])
+            }
+        })
+        
+        // ドラッグ&ドロップハンドラ
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault()
+            uploadArea.classList.add('dragover')
+        })
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover')
+        })
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault()
+            uploadArea.classList.remove('dragover')
+            
+            if (e.dataTransfer.files.length > 0) {
+                processFile(e.dataTransfer.files[0])
+            }
+        })
+        
+        async function processFile(file) {
+            try {
+                // UI状態をリセット
+                error.style.display = 'none'
+                result.style.display = 'none'
+                loading.style.display = 'block'
+                
+                // ファイル検証
+                if (!file.name.toLowerCase().endsWith('.clip')) {
+                    throw new Error('CLIPファイルを選択してください (.clip拡張子)')
+                }
+                
+                console.log('📁 ファイル処理開始:', file.name)
+                
+                // ClipStudioインスタンス作成
+                const clipStudio = await ClipStudio.load(file)
+                console.log('✅ ClipStudioインスタンス作成完了')
+                
+                // サムネイル取得・表示
+                const thumbnail = clipStudio.getThumbnail()
+                const thumbnailUrl = URL.createObjectURL(thumbnail)
+                thumbnailImage.src = thumbnailUrl
+                console.log('🖼️ サムネイル表示完了')
+                
+                // レイヤー情報取得・表示
+                const layers = clipStudio.getLayers()
+                displayLayers(layers)
+                console.log('📑 レイヤー情報表示完了')
+                
+                // 結果表示
+                loading.style.display = 'none'
+                result.style.display = 'block'
+                
+                console.log('🎉 ファイル処理完了!')
+                
+            } catch (err) {
+                console.error('❌ エラー:', err)
+                loading.style.display = 'none'
+                error.textContent = `エラー: ${err.message}`
+                error.style.display = 'block'
+            }
+        }
+        
+        function displayLayers(layers) {
+            layersList.innerHTML = ''
+            
+            if (layers.length === 0) {
+                layersList.innerHTML = '<p style="text-align: center; color: #666;">レイヤーが見つかりませんでした</p>'
+                return
+            }
+            
+            layers.forEach((layer, index) => {
+                const layerElement = document.createElement('div')
+                layerElement.className = 'layer-item'
+                
+                const typeIcon = layer.isFolder ? '📁' : '🖼️'
+                const visibilityIcon = layer.isVisible ? '👁️' : '🚫'
+                const opacity = Math.round(layer.opacity * 100)
+                
+                layerElement.innerHTML = `
+                    <div class="layer-name">
+                        ${typeIcon} ${layer.name}
+                    </div>
+                    <div class="layer-info">
+                        <span class="info-tag">ID: ${layer.id.substring(0, 8)}...</span>
+                        <span class="info-tag">Index: ${layer.index}</span>
+                        <span class="info-tag">不透明度: ${opacity}%</span>
+                        <span class="info-tag">${visibilityIcon} ${layer.isVisible ? '表示' : '非表示'}</span>
+                        <span class="info-tag">${layer.isFolder ? 'フォルダ' : 'レイヤー'}</span>
+                    </div>
+                `
+                
+                layersList.appendChild(layerElement)
+            })
+        }
+    </script>
+</body>
+</html>
