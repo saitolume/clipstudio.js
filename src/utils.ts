@@ -5,15 +5,35 @@ export const isBrowser = typeof window !== 'undefined'
 const SQLITE_HEADER = 'SQLite format 3'
 
 /**
+ * Finds the index of a byte sequence within a Uint8Array
+ * @param source - Source array to search in
+ * @param pattern - Pattern to search for
+ * @returns Index of pattern or -1 if not found
+ */
+const findIndexOfBytes = (source: Uint8Array, pattern: Uint8Array): number => {
+  for (let i = 0; i <= source.length - pattern.length; i++) {
+    let found = true
+    for (let j = 0; j < pattern.length; j++) {
+      if (source[i + j] !== pattern[j]) {
+        found = false
+        break
+      }
+    }
+    if (found) return i
+  }
+  return -1
+}
+
+/**
  * Extracts SQLite database from a CLIP STUDIO file
  * @param file - CLIP file as File or Buffer
  * @returns Promise resolving to SQLite data as Blob or Buffer
  */
-export const parseClipToSqlite = async (file: File | Buffer): Promise<Blob | Buffer> => {
-  const sqliteHeaderBuffer = Buffer.from(new TextEncoder().encode(SQLITE_HEADER))
+export const parseClipToSqlite = async (file: File | Uint8Array): Promise<Blob | Uint8Array> => {
+  const sqliteHeaderBytes = new TextEncoder().encode(SQLITE_HEADER)
 
-  if (file instanceof Buffer) {
-    const index = file.indexOf(sqliteHeaderBuffer)
+  if (file instanceof Uint8Array) {
+    const index = findIndexOfBytes(file, sqliteHeaderBytes)
     if (index === -1) {
       throw new Error('SQLite data not found in CLIP file')
     }
@@ -24,12 +44,12 @@ export const parseClipToSqlite = async (file: File | Buffer): Promise<Blob | Buf
     const reader = new FileReader()
     reader.onload = () => {
       try {
-        const fileBuf = Buffer.from(reader.result as ArrayBuffer)
-        const index = fileBuf.indexOf(sqliteHeaderBuffer)
+        const fileBytes = new Uint8Array(reader.result as ArrayBuffer)
+        const index = findIndexOfBytes(fileBytes, sqliteHeaderBytes)
         if (index === -1) {
           throw new Error('SQLite data not found in CLIP file')
         }
-        const data = fileBuf.slice(index)
+        const data = fileBytes.slice(index)
         resolve(new Blob([data]))
       } catch (error) {
         reject(error)

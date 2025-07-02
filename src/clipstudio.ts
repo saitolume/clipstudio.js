@@ -20,7 +20,7 @@ export class ClipStudio {
    * @param file - CLIP file as File or Buffer
    * @returns Promise resolving to ClipStudio instance
    */
-  static load = async (file: File | Buffer): Promise<ClipStudio> => {
+  static load = async (file: File | Uint8Array): Promise<ClipStudio> => {
     const sqlite = await parseClipToSqlite(file)
     const db = await Sqlite.load(sqlite)
     return new ClipStudio(db)
@@ -53,7 +53,7 @@ export class ClipStudio {
     }
 
     const { values } = results[0]
-    return values.map<Layer>(([id, index, name, opacity, visibility, folder]) => ({
+    return values.map(([id, index, name, opacity, visibility, folder]: unknown[]) => ({
       id: id as string,
       index: index as number,
       name: name as string,

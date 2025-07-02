@@ -199,18 +199,46 @@ Note: Requires support for ES2020 features and WebAssembly.
 # Install dependencies
 pnpm install
 
-# Run tests
+# Build library
+pnpm run build
+
+# Run core tests (unit + examples)
 pnpm test
 
-# Build library
-pnpm build
+# Run unit tests only
+pnpm run test:unit
 
-# Lint code
-pnpm lint
+# Run examples tests
+pnpm run test:examples
 
-# Format code
-pnpm format
+# Run browser tests
+pnpm run test:playwright
+
+# Start development server
+pnpm run serve
+
+# Code quality
+pnpm run check    # Run all checks
+pnpm run lint     # Lint code
+pnpm run format   # Format code
 ```
+
+### Development Server
+
+The library includes a built-in development server for testing browser examples:
+
+```bash
+# Start server with automatic port selection
+pnpm run serve
+
+# Server will automatically find an available port
+# Access examples at: http://localhost:[auto-port]/examples/
+```
+
+The server automatically:
+- Finds available ports (tries 8080, 3000, 5000, 9000, etc.)
+- Enables CORS for cross-origin requests
+- Serves static files with proper MIME types
 
 ## Contributing
 
