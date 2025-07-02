@@ -22,16 +22,21 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -b tsconfig.json",
+    "dev": "npx http-server . -p 0 --cors",
     "format": "biome format --write src/",
     "lint": "biome lint src/",
     "check": "biome check src/",
+    "ci": "biome ci src/",
+    "test": "tsx --test test/clipstudio.test.ts test/sqlite.test.ts test/utils.test.ts",
+    "test:e2e": "playwright test",
     "prepublishOnly": "pnpm run build",
-    "test": "tsx --test test/**/*.test.ts",
     "release": "npm version patch && git push origin --tags"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@playwright/test": "^1.53.2",
     "@types/sql.js": "^1.4.9",
+    "playwright": "^1.53.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
