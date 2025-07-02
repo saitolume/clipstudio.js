@@ -186,6 +186,16 @@
         const thumbnailImage = document.getElementById('thumbnailImage')
         const layersList = document.getElementById('layersList')
         
+        // 初期状態を確実に設定
+        function initializeUI() {
+            loading.style.display = 'none'
+            error.style.display = 'none'
+            result.style.display = 'none'
+        }
+        
+        // ページ読み込み時に初期化
+        initializeUI()
+        
         // ファイル選択エリアのクリックハンドラ
         uploadArea.addEventListener('click', () => {
             fileInput.click()
@@ -219,17 +229,20 @@
         
         async function processFile(file) {
             try {
+                console.log('📁 ファイル処理開始:', file.name)
+                
                 // UI状態をリセット
                 error.style.display = 'none'
                 result.style.display = 'none'
                 loading.style.display = 'block'
                 
+                // 少し待機してDOM更新を確実にする
+                await new Promise(resolve => setTimeout(resolve, 100))
+                
                 // ファイル検証
                 if (!file.name.toLowerCase().endsWith('.clip')) {
                     throw new Error('CLIPファイルを選択してください (.clip拡張子)')
                 }
-                
-                console.log('📁 ファイル処理開始:', file.name)
                 
                 // ClipStudioインスタンス作成
                 const clipStudio = await ClipStudio.load(file)

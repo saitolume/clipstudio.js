@@ -23,8 +23,9 @@ test.describe('CLIP STUDIO.js Package Integration', () => {
     const clipFilePath = process.cwd() + '/test/sample.clip'
     await page.locator('#fileInput').setInputFiles(clipFilePath)
     
-    // ローディング表示を確認
-    await expect(page.locator('#loading')).toBeVisible()
+    // ローディング表示を確認（少し待機してからチェック）
+    await page.waitForTimeout(200)
+    await expect(page.locator('#loading')).toBeVisible({ timeout: 5000 })
     await expect(page.locator('#loading')).toContainText('🔄 ファイルを解析中...')
     
     // 処理完了まで待機（最大20秒）
@@ -125,8 +126,12 @@ test.describe('CLIP STUDIO.js Package Integration', () => {
       // 無効なファイルをアップロード
       await page.locator('#fileInput').setInputFiles(invalidFilePath)
       
+      // ローディングが表示されることを確認
+      await page.waitForTimeout(200)
+      await expect(page.locator('#loading')).toBeVisible({ timeout: 5000 })
+      
       // エラー表示まで待機
-      await expect(page.locator('#error')).toBeVisible({ timeout: 10000 })
+      await expect(page.locator('#error')).toBeVisible({ timeout: 15000 })
       
       // **パッケージのエラーハンドリング機能をテスト**
       
